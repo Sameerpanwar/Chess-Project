@@ -14,8 +14,15 @@ A real-time multiplayer chess platform built to practice full-stack development.
 - Real-time: Socket.io
 
 ##  How to Setup
-1. Clone the Repo:
-   ```bash
-   git clone [https://github.com/Sameerpanwar/Chess-Project.git](https://github.com/Sameerpanwar/Chess-Project.git)
-   cd Chess-Project
+### 1. Clone the Repo
+git clone https://github.com/Sameerpanwar/Chess-Project.git
+cd Chess-Project
 
+### 2. Install Dependencies
+npm install
+
+### 3. Configure Environment
+Create a .env file and add your Railway credentials.
+
+### 4. Run the App
+node app.js
