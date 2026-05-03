@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Maestro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .chessboard {
+        display: grid;
+        grid-template-columns: repeat(8, 60px);
+        grid-template-rows: repeat(8, 60px);
+        width: 480px; 
+        height: 480px;
+        border: 5px solid #333;
+    }
+
+    .piece.white {
+        color: white;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 1));
+    }
+
+    .piece.black {
+        color: black;
+    }
+
+    .flipped {
+        transform: rotate(180deg);
+    }
+
+    .square {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .square.light {
+        background-color: #f0d9b5;
+    }
+
+    .square.dark {
+        background-color: #b58863;
+    }
+
+    .piece {
+    font-size: 36px;
+    cursor: grab;
+    position: relative; 
+    z-index: 10;        
+    user-select: none;  
+}
+
+    .piece.draggable {
+        cursor: grab;
+    }
+
+    .dragging {
+        opacity: 0.5;
+    }
+
+    .flipped .piece {
+        transform: rotate(180deg);
+    }
+
+    .hidden {
+        display: none !important;
+    }
+  </style>
+</head>
+<body class="bg-zinc-900 text-white">
+  
+  <div class="w-full h-screen flex flex-col items-center justify-center gap-6">
+    
+    <!-- STATIC HEADER -->
+    <div class="text-center">
+      <h1 class="text-5xl font-black tracking-widest text-blue-500 uppercase">Chess Game</h1>
+      <p class="text-zinc-500 mt-2 italic">Strategy & Precision</p>
+    </div>
+
+    <!-- CHESSBOARD -->
+    <div class="game-container relative p-2 bg-zinc-800 rounded-lg shadow-2xl">
+        <div class="chessboard"></div>
+    </div>
+
+    <!-- STATIC RESULT TEXT AREA -->
+    <div id="game-result" class="text-2xl font-bold text-green-500 h-8">
+        <!-- Result text appears here via JS -->
+    </div>
+
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js" integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <script src="/js/chessgame.js"></script>
+
+
+  <script>
+    
+    if(typeof socket !== 'undefined') {
+        socket.on("gameOver", (data) => {
+            document.getElementById("game-result").innerText = data.message;
+        });
+    }
+  </script>
+  
+</body>
+</html>
